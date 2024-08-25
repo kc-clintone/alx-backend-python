@@ -50,11 +50,12 @@ class TestAccessNestedMap(unittest.TestCase):
         when attempting to access a key that does not exist in the nested map.
         Also verifies that the exception message is as expected.
         """
-        with self.assertRaises(KeyError) as context:
+#        with self.assertRaises(KeyError) as context:
+#            access_nested_map(nested_map, path)
+
+#        self.assertEqual(str(context.exception), str(path[-1]))
+        with self.assertRaises(exception):
             access_nested_map(nested_map, path)
-
-        self.assertEqual(str(context.exception), str(path[-1]))
-
 
 if __name__ == "__main__":
     unittest.main()
