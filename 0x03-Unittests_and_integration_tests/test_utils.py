@@ -22,6 +22,7 @@ from utils import (
     memoize,
 )
 
+
 class TestAccessNestedMap(unittest.TestCase):
     """
     Test case for the utils.access_nested_map function.
@@ -58,19 +59,26 @@ class TestAccessNestedMap(unittest.TestCase):
             exception: Exception,
             ) -> None: 
         """
-        Test access_nested_map to ensure a KeyError is raised for invalid
+        Test access_nested_map to ensure a KeyError is raised for
+        invalid
         paths.
 
         Parameters:
-        - nested_map: The dictionary to attempt to retrieve the value from.
-        - path: A tuple representing the sequence of keys to access the value.
+        - nested_map: The dictionary to attempt to retrieve the
+        value from.
+        - path: A tuple representing the sequence of keys to access
+        the value.
 
-        The method checks if the access_nested_map function raises a KeyError
-        when attempting to access a key that does not exist in the nested map.
+        The method checks if the access_nested_map function
+        raises a KeyError
+        when attempting to access a key that does not exist in
+        the nested map.
         Also verifies that the exception message is as expected.
         """
+
         with self.assertRaises(exception):
             access_nested_map(nested_map, path)
+
 
 if __name__ == "__main__":
     unittest.main()
