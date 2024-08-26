@@ -45,6 +45,7 @@ class TestAccessNestedMap(unittest.TestCase):
         The method checks if the value returned by access_nested_map
         matches the expected result.
         """
+
         self.assertEqual(access_nested_map(nested_map, path), expected)
 
 
@@ -57,7 +58,8 @@ class TestAccessNestedMap(unittest.TestCase):
             nested_map: Mapping,
             path: Sequence,
             exception: Exception,
-            ) -> None: 
+            ) -> None:
+
         """
         Test access_nested_map to ensure a KeyError is raised for
         invalid
@@ -91,21 +93,27 @@ class TestGetJson(unittest.TestCase):
         ("http://holberton.io", {"payload": False})
     ])
     def test_get_json(self, test_url, test_payload):
+
         """
-        Test that get_json returns the correct JSON payload from the given URL.
+        Test that get_json returns the correct JSON payload from
+        the given URL.
 
         Parameters:
         - test_url: The URL to be passed to get_json.
-        - test_payload: The expected JSON payload returned by the mocked requests.get.
+        - test_payload: The expected JSON payload returned by the
+        mocked requests.get.
 
-        The method mocks requests.get to avoid actual HTTP calls and verifies that:
+        The method mocks requests.get to avoid actual HTTP calls
+        and verifies that:
         - requests.get is called once with test_url.
         - get_json returns the expected test_payload.
         """
+
         mock_response = Mock()
         mock_response.json.return_value = test_payload
 
-        with patch('utils.requests.get', return_value=mock_response) as mock_get:
+        with patch('utils.requests.get',
+                    return_value=mock_response) as mock_get:
             result = get_json(test_url)
             mock_get.assert_called_once_with(test_url)
             self.assertEqual(result, test_payload)
