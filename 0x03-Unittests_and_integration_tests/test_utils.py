@@ -8,6 +8,20 @@ import unittest
 from parameterized import parameterized
 from utils import access_nested_map
 
+from typing import (
+    Dict,
+    Mapping,
+    Sequence,
+    Tuple,
+    Union,
+)
+
+from utils import (
+    access_nested_map,
+    get_json,
+    memoize,
+)
+
 class TestAccessNestedMap(unittest.TestCase):
     """
     Test case for the utils.access_nested_map function.
