@@ -46,7 +46,7 @@ class TestGithubOrgClient(unittest.TestCase):
 
     def test_public_repos_url(self) -> None:
         """
-        Tests the _public_repos_url property.
+        Testing the _public_repos_url property.
         """
         with patch("client.GithubOrgClient.org",
                    new_callable=PropertyMock,
@@ -62,7 +62,7 @@ class TestGithubOrgClient(unittest.TestCase):
     @patch("client.get_json")
     def test_public_repos(self, mock_get_json: MagicMock) -> None:
         """
-        Tests the public_repos method.
+        Testing the public_repos method.
         """
 
         test_payload = {
@@ -156,10 +156,35 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
             'https://api.github.com/orgs/google/repos': cls.repos_payload,
         }
 
-        def get_payload(url):
+        def get_payload(this_url):
             if this_url in route_pl:
                 return Mock(**{'json.return_value': route_pl[this_url]})
             return HTTPError
 
         cls.get_patcher = patch("requests.get", side_effect=get_payload)
         cls.get_patcher.start()
+
+    def test_public_repos(self) -> None:
+        """
+        Testing public_repos method.
+        """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(),
+            self.expected_repos,
+        )
+
+    def test_public_repos_with_license(self) -> None:
+        """
+        Testing license for public_repos method
+        """
+        self.assertEqual(
+            GithubOrgClient("google").public_repos(license="apache-2.0"),
+            self.apache2_repos,
+        )
+
+    @classmethod
+    def tearDownClass(cls) -> None:
+        """
+        Unsets the class fixtures after tests.
+        """
+        cls.get_patcher.stop()
