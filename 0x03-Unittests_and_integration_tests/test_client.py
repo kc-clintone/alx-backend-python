@@ -5,6 +5,7 @@ Test client
 
 
 import unittest
+from typing import Dict
 from client import GithubOrgClient
 from requests import HTTPError
 from fixtures import TEST_PAYLOAD
