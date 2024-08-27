@@ -120,3 +120,34 @@ class TestGetJson(unittest.TestCase):
             req_get.assert_called_once_with(test_url)
 
 
+class TestMemoize(unittest.TestCase):
+    """
+    Testing the memoize function.
+    """
+    def test_memoize(self) -> None:
+        """
+        Testing the memoization function.
+        """
+        class TestClass:
+            def a_method(self):
+                """
+                Testing the given method.
+                """
+                return 42
+
+            @memoize
+            def a_property(self):
+                """
+                Trsting if it caches the results.
+                """
+                return self.a_method()
+
+        with patch.object(
+                TestClass,
+                "a_method",
+                return_value=lambda: 42,
+                ) as memoized_function:
+            my_test_class = TestClass()
+            self.assertEqual(my_test_class.a_property(), 42)
+            self.assertEqual(my_test_class.a_property(), 42)
+            memoized_function.assert_called_once()
