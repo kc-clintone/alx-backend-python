@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Testing module
+Test utils  module
 """
 
 
@@ -21,7 +21,6 @@ from utils import (
     get_json,
     memoize,
 )
-
 
 class TestAccessNestedMap(unittest.TestCase):
     """
@@ -51,7 +50,8 @@ class TestAccessNestedMap(unittest.TestCase):
         The method checks if the value returned by access_nested_map
         matches the expected result.
         """
-        self.assertEqual(access_nested_map(nested_map, path), expected)
+
+       self.assertEqual(access_nested_map(nested_map, path), expected)
 
     @parameterized.expand([
         ({}, ("a",), KeyError),
@@ -80,6 +80,7 @@ class TestAccessNestedMap(unittest.TestCase):
         the nested map.
         Also verifies that the exception message is as expected.
         """
+
         with self.assertRaises(exception):
             access_nested_map(nested_map, path)
 
@@ -113,26 +114,29 @@ class TestGetJson(unittest.TestCase):
         - get_json returns the expected test_payload.
         """
 
-        attrs = {'json.return_value': test_payload}
+        attributes = {'json.return_value': test_payload}
 
-        with patch("requests.get", return_value=Mock(**attrs)) as req_get:
+        with patch("requests.get", return_value=Mock(**attributes)) as requrstsdotget:
             self.assertEqual(get_json(test_url), test_payload)
-            req_get.assert_called_once_with(test_url)
+            requestsdotget.assert_called_once_with(test_url)
 
 
 class TestMemoize(unittest.TestCase):
     """
     Testing the memoize function.
     """
+
     def test_memoize(self) -> None:
         """
         Testing the memoization function.
         """
+
         class TestClass:
             def a_method(self):
                 """
                 Testing the given method.
                 """
+
                 return 42
 
             @memoize
@@ -140,6 +144,7 @@ class TestMemoize(unittest.TestCase):
                 """
                 Trsting if it caches the results.
                 """
+
                 return self.a_method()
 
         with patch.object(

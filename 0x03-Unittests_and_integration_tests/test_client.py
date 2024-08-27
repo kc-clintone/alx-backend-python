@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Test client
+Test client module
 """
 
 
@@ -48,6 +48,7 @@ class TestGithubOrgClient(unittest.TestCase):
         """
         Testing the _public_repos_url property.
         """
+
         with patch("client.GithubOrgClient.org",
                    new_callable=PropertyMock,
                   ) as mock_org:
@@ -58,6 +59,7 @@ class TestGithubOrgClient(unittest.TestCase):
                 GithubOrgClient("google")._public_repos_url,
                 "https://api.github.com/users/google/repos",
             )
+
 
     @patch("client.get_json")
     def test_public_repos(self, mock_get_json: MagicMock) -> None:
@@ -103,6 +105,7 @@ class TestGithubOrgClient(unittest.TestCase):
             ]
         }
         mock_get_json.return_value = test_payload["repos"]
+
         with patch(
                 "client.GithubOrgClient._public_repos_url",
                 new_callable=PropertyMock,
@@ -142,7 +145,7 @@ class TestGithubOrgClient(unittest.TestCase):
 ])
 class TestIntegrationGithubOrgClient(unittest.TestCase):
     """
-    Performs integration tests for the `GithubOrgClient` class.
+    Runs integration tests for the class GithubOrgClient.
     """
 
     @classmethod
@@ -168,6 +171,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         Testing public_repos method.
         """
+
         self.assertEqual(
             GithubOrgClient("google").public_repos(),
             self.expected_repos,
@@ -177,6 +181,7 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         Testing license for public_repos method
         """
+
         self.assertEqual(
             GithubOrgClient("google").public_repos(license="apache-2.0"),
             self.apache2_repos,
@@ -187,4 +192,5 @@ class TestIntegrationGithubOrgClient(unittest.TestCase):
         """
         Unsets the class fixtures after tests.
         """
+
         cls.get_patcher.stop()
