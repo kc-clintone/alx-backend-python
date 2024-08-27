@@ -130,3 +130,36 @@ class TestGithubOrgClient(unittest.TestCase):
         test_client = GithubOrgClient("google")
         confirm_license = test_client.has_license(repo, key)
         self.assertEqual(confirm_license, expected)
+
+
+@parameterized_class([
+    {
+        'org_payload': TEST_PAYLOAD[0][0],
+        'repos_payload': TEST_PAYLOAD[0][1],
+        'expected_repos': TEST_PAYLOAD[0][2],
+        'apache2_repos': TEST_PAYLOAD[0][3],
+    },
+])
+class TestIntegrationGithubOrgClient(unittest.TestCase):
+    """
+    Performs integration tests for the `GithubOrgClient` class.
+    """
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        """
+        Prepare class
+        """
+
+        route_pl = {
+            'https://api.github.com/orgs/google': cls.org_payload,
+            'https://api.github.com/orgs/google/repos': cls.repos_payload,
+        }
+
+        def get_payload(url):
+            if this_url in route_pl:
+                return Mock(**{'json.return_value': route_pl[this_url]})
+            return HTTPError
+
+        cls.get_patcher = patch("requests.get", side_effect=get_payload)
+        cls.get_patcher.start()
