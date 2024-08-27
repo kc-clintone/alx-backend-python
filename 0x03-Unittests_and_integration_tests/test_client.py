@@ -5,9 +5,17 @@ Test client
 
 
 import unittest
-from unittest.mock import patch
-from parameterized import parameterized
 from client import GithubOrgClient
+from requests import HTTPError
+from fixtures import TEST_PAYLOAD
+from parameterized import parameterized, parameterized_class
+
+from unittest.mock import (
+    MagicMock,
+    Mock,
+    PropertyMock,
+    patch,
+)
 
 class TestGithubOrgClient(unittest.TestCase):
     """
@@ -49,8 +57,3 @@ class TestGithubOrgClient(unittest.TestCase):
                 GithubOrgClient("google")._public_repos_url,
                 "https://api.github.com/users/google/repos",
             )
-
-
-
-if __name__ == "__main__":
-    unittest.main()
